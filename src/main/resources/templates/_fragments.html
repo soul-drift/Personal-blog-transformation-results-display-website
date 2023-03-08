@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="${title}">项目详情</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+    <link rel="stylesheet" href="../static/css/animate.css" th:href="@{/css/animate.css}">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}">
+    <link rel="stylesheet" href="../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+
+<!--导航-->
+<nav th:fragment="menu(n)" class="ui m-bg attached segment m-padded-tb-mini m-shadow-small animated fadeInDown" style="z-index: 999!important;">
+    <div class="ui container">
+        <div class="ui secondary stackable menu">
+            <h2 class="ui teal header item">实践创新成果展示</h2>
+            <a href="#" th:href="@{/}" class="m-item item m-mobile-hide m-black" th:classappend="${n==1} ? 'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{/types/-1}" class="m-item item m-mobile-hide m-black" th:classappend="${n==2} ? 'active'"><i class="idea icon"></i>分类</a>
+            <a href="#" th:href="@{/tags/-1}" class="m-item item m-mobile-hide m-black" th:classappend="${n==3} ? 'active'"><i class="tags icon"></i>标签</a>
+            <a href="#" th:href="@{/archives}" class="m-item item m-mobile-hide m-black" th:classappend="${n==4} ? 'active'"><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{/about}" class="m-item item m-mobile-hide m-black" th:classappend="${n==5} ? 'active'"><i class="info icon"></i>关于我们</a>
+            <div class="right m-item item m-mobile-hide">
+                <!--可以加transparent:透明、method="post"；不定义默认是get-->
+                <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                    <div class="ui icon input ">
+                        <input type="text" name="query" placeholder="Search...." th:value="${query}">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--赞赏-->
+<div th:fragment="zanshang" class="ui payQR flowing popup transition hidden">
+    <div class="ui orange basic label">
+        <!--images:自动把字体设置为0了，看不见，所以要设置字体大小，inherit:继承label的字体大小-->
+        <div class="ui images" style="font-size: inherit !important;">
+            <div class="image">
+                <!--rounded bordered:圆角边线-->
+                <img src="../static/images/ZFBQR.png" th:src="@{/images/ZFBQR.png alt=" class="ui rounded bordered image" style="width: 120px">
+                <div>支付宝打赏</div>
+            </div>
+            <div class="image">
+                <!--rounded bordered:圆角边线-->
+                <img src="../static/images/WeChatQR.png" th:src="@{/images/WeChatQR.png alt=" class="ui rounded bordered image" style="width: 120px">
+                <div>微信打赏</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部footer-->
+<footer th:fragment="footer" class="ui m-bg animated fadeInUp inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/院徽.jpg" th:src="@{/images/院徽.jpg}"  class="ui rounded image" alt="" style="width: 110px">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column" th:fragment="newblogList">
+                <div id="newblog-container">
+                    <h4 class="ui m-black inverted header m-text-thin m-text-spaced " >最新项目</h4>
+                    <div class="ui inverted link list">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item m-black m-text-thin" th:each="blog : ${newblogs}" th:text="${blog.title}">用户故事（User Story）</a>
+                        <!--/*-->
+                        <a href="#" class="item m-black m-text-thin">用户故事（User Story）</a>
+                        <a href="#" class="item m-black m-text-thin">用户故事（User Story）</a>
+                        <!--*/-->
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-spaced m-black ">联系开发者</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item m-black m-text-thin" th:text="#{index.email}">Email：wy1291878907@163.com</a>
+                    <a href="#" class="item m-black m-text-thin" th:text="#{index.qq}">QQ：1291878907</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header m-black m-text-thin m-text-spaced ">简介</h4>
+                <p class="m-text-thin m-black m-text-spaced m-opacity-mini">这是广州大学计算机科学与网络工程学院21级实践创新小分队的成果展示网站，网站会展示项目的成果与相关讯息，欢迎关注我们</p>
+            </div>
+        </div>
+        <div class="ui inverted m-black section divider"></div>
+        <p class="m-text-thin m-black m-text-spaced m-opacity-tiny">Copyright © 2023 - <span th:text="${#dates.year(#dates.createNow())}">2024</span> Soul_drift Designed by Soul_drift</p>
+    </div>
+    <center>
+        <div class="m-black m-margin-top">
+            <span id="runtime_span"></span>
+            <script type="text/javascript">function show_runtime() {
+                window.setTimeout("show_runtime()", 1000);
+                X = new Date("03/05/2023 12:00:00");
+                Y = new Date();
+                T = (Y.getTime() - X.getTime());
+                M = 24 * 60 * 60 * 1000;
+                a = T / M;
+                A = Math.floor(a);
+                b = (a - A) * 24;
+                B = Math.floor(b);
+                c = (b - B) * 60;
+                C = Math.floor((b - B) * 60);
+                D = Math.floor((c - C) * 60);
+                runtime_span.innerHTML = "本站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒"
+            }
+
+            show_runtime();</script>
+        </div>
+    </center>
+</footer>
+
+<th:block th:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+    <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
+    <script src="../static/lib/qrcode/qrcode.min.js" th:src="@{/lib/qrcode/qrcode.min.js}"></script>
+    <script src="../static/lib/waypoints/jquery.waypoints.min.js" th:src="@{/lib/waypoints/jquery.waypoints.min.js}"></script>
+    <script>
+        $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+    </script>
+</th:block>
+
+</body>
+</html>
